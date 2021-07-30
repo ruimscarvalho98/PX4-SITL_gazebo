@@ -661,5 +661,13 @@
       </control_channels>
     </plugin>
     <static>0</static>
+    <include>
+      <uri>model://geotagged_cam</uri>
+      <pose>0 0 0 0 -1.571 0</pose>
+    </include>
+    <joint name="geotagged_cam_joint" type="fixed">
+      <parent>believer::base_link</parent>
+      <child>geotagged_cam::camera_link</child>
+    </joint>
   </model>
 </sdf>
