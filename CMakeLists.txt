@@ -39,6 +39,7 @@ include(GNUInstallDirs)
 option(BUILD_GSTREAMER_PLUGIN "enable gstreamer plugin" ON)
 option(BUILD_ROS_PLUGINS "Enable building ROS dependent plugins" OFF)
 option(GENERATE_ROS_MODELS "Generate model sdf for ROS environment" OFF)
+option(BUILD_ROS2_PLUGINS, "Enable building ROS2 plugins" ON)
 
 option(SEND_VISION_ESTIMATION_DATA "Send Mavlink VISION_POSITION_ESTIMATE msgs" OFF)
 option(SEND_ODOMETRY_DATA "Send Mavlink ODOMETRY msgs" OFF)
@@ -109,6 +110,15 @@ if (BUILD_ROS_PLUGINS)
   find_package(roscpp REQUIRED)
   find_package(sensor_msgs REQUIRED)
 endif()
+
+#if (BUILD_ROS2_PLUGINS)
+  find_package(ament_cmake REQUIRED)
+  find_package(sensor_msgs REQUIRED)
+  find_package(rclcpp REQUIRED)
+  find_package(gazebo_ros REQUIRED)
+  find_package(gazebo_msgs REQUIRED)
+  find_package(gazebo_dev REQUIRED)
+#endif()
 
 # find MAVLink
 find_package(MAVLink)
@@ -427,6 +437,26 @@ if (BUILD_ROS_PLUGINS)
     ${GAZEBO_libraries}
   )
 endif()
+#message(FATAL_ERROR "Adding ROS2 gazebo gps plugin")
+
+#if (BUILD_ROS2_PLUGINS)
+  add_library(gazebo_gps_plugin_ros SHARED src/gazebo_gps_plugin_ros.cpp)
+  target_link_libraries(gazebo_gps_plugin_ros ${GAZEBO_libraries} ${rclcpp_LIBRARIES})
+  list(APPEND plugins gazebo_gps_plugin_ros)
+  message(STATUS "Adding ROS2 gazebo gps plugin")
+
+  include_directories(
+    include
+    ${sensor_msgs_INCLUDE_DIRS}
+  )
+  ament_target_dependencies(gazebo_gps_plugin_ros
+    "gazebo_dev"
+    "gazebo_ros"
+    "sensor_msgs"
+    "rclcpp"
+  )
+  ament_export_libraries(gazebo_gps_plugin_ros)
+#endif()
 
 if (GSTREAMER_FOUND)
   add_library(gazebo_gst_camera_plugin SHARED src/gazebo_gst_camera_plugin.cpp)

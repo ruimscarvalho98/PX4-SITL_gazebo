@@ -1,12 +1,12 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
 <model name='vehicle'>
-      <pose>0 0 0.325 0 -0 0</pose>
+      <pose>0 0 2 0 -0 0</pose>
 
       <link name='chassis'>
         <pose>-0.151427 -0 0.175 0 -0 0</pose>
         <inertial>
-          <mass>1.14395</mass>
+          <mass>10.14395</mass>
           <inertia>
             <ixx>0.126164</ixx>
             <ixy>0</ixy>
@@ -29,6 +29,26 @@
               <size>2.01142 1 0.568726</size>
             </box>
           </geometry>
+            <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+              </ode>
+            </friction>
+            <contact>
+              <ode>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+                <max_vel>0.01</max_vel>
+                <min_depth>0.01</min_depth>
+              </ode>
+            </contact>
+          </surface>
         </collision>
       </link>
 
@@ -88,7 +108,7 @@
           <inertia>
             <ixx>0.145833</ixx>
             <ixy>0</ixy>
-            <ixz>0</ixz>
+            <ixz>0</ixz>n a vec
             <iyy>0.145833</iyy>
             <iyz>0</iyz>
             <izz>0.125</izz>
@@ -203,8 +223,8 @@
 
         <ros>
           <namespace>/demo</namespace>
-          <remapping>cmd_vel:=cmd_demo</remapping>
-          <remapping>odom:=odom_demo</remapping>
+          <remapping>cmd_vel:=key_vel</remapping>
+          <remapping>odom:=odom</remapping>
         </ros>
 
         <!-- wheels -->
@@ -229,64 +249,15 @@
 
       </plugin>
 
-    <model name="irlock_beacon">
-      <pose>0 0 0.5 0 0 0</pose>
-      <link name="link">
-         <inertial>
-          <pose>0 0 0 0 0 0</pose>
-          <mass>10.0</mass>
-          <inertia>
-            <ixx>0.01</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.01</iyy>
-            <iyz>0</iyz>
-            <izz>0.01</izz>
-          </inertia>
-        </inertial>
-        <collision name="collision">
-          <geometry>
-            <box>
-              <size>0.1 0.1 0.01</size>
-            </box>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>100.0</mu>
-                <mu2>100.0</mu2>
-                <fdir1>1 0 0</fdir1>
-              </ode>
-            </friction>
-            <contact>
-              <ode>
-                <kp>1e+12</kp>
-                <kd>1</kd>
-                <max_vel>10</max_vel>
-                <min_depth>0.003</min_depth>
-              </ode>
-            </contact>
-          </surface>
-        </collision>
-        <visual name="visual">
-          <geometry>
-            <box>
-              <size>0.1 0.1 0.02</size>
-            </box>
-          </geometry>
-          <material>
-            <script>
-              <name>Gazebo/Green</name>
-            </script>
-          </material>
-        </visual>
-      </link>
-    </model>
 
-    <joint name='irlock' type='fixed'>
-      <pose> 0 0 0.5 0 0 0 </pose>
-      <parent> irlock_beacon::link</parent>
-      <child> chassis </child>
+    <include>
+      <uri>model://gps_ros</uri>
+      <name>gps1</name>
+      <pose>0 0.2 0.484363 0 0 0</pose>
+    </include>
+    <joint name='gps1_joint' type='fixed'>
+      <child>gps1::link</child>
+      <parent>vehicle::chassis</parent>
     </joint>
 
   </model>

@@ -96,8 +96,7 @@ void IRLockPlugin::OnUpdated()
   for (int idx = 0; idx < img.model_size(); idx++) {
 
     gazebo::msgs::LogicalCameraImage_Model model = img.model(idx);
-
-    if (model.has_name() && model.name() == "vehicle::irlock_beacon") {
+    if (model.has_name() && model.name() == "irlock_beacon") {
       if (model.has_pose()) {
 
         // position of the beacon in camera frame
@@ -105,6 +104,7 @@ void IRLockPlugin::OnUpdated()
         pos.X() = model.pose().position().x();
         pos.Y() = model.pose().position().y();
         pos.Z() = model.pose().position().z();
+
 
         // the default orientation of the IR</model>ock sensor reports beacon in front of vehicle as -y values, beacon right of vehicle as x values
         // rotate the measurement accordingly
