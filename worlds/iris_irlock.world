@@ -17,12 +17,10 @@
       <uri>model://cap_car</uri>
       <pose> -1 0 0 0 0 0 </pose>
     </include>
-<!--
     <include>
       <uri>model://irlock_beacon</uri>
       <pose> -1 0 1 0 0 0 </pose>
     </include>
--->
     <physics name='default_physics' default='0' type='ode'>
       <gravity>0 0 -9.8066</gravity>
       <ode>
