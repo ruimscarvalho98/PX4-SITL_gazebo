@@ -20,7 +20,6 @@
         </limit>
       </axis>
     </joint>
-
     <include>
       <uri>model://irlock</uri>
       <pose>-0 0 0 0 1.5708 0</pose>
@@ -36,6 +35,5 @@
         </limit>
       </axis>
     </joint>
-
   </model>
 </sdf>

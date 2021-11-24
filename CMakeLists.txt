@@ -114,6 +114,7 @@ endif()
 #if (BUILD_ROS2_PLUGINS)
   find_package(ament_cmake REQUIRED)
   find_package(sensor_msgs REQUIRED)
+  find_package(std_srvs REQUIRED)
   find_package(rclcpp REQUIRED)
   find_package(gazebo_ros REQUIRED)
   find_package(gazebo_msgs REQUIRED)
@@ -457,6 +458,25 @@ endif()
   )
   ament_export_libraries(gazebo_gps_plugin_ros)
 #endif()
+
+add_library(gazebo_drop_plugin_ros SHARED src/gazebo_drop_plugin_ros.cpp)
+target_link_libraries(gazebo_drop_plugin_ros ${GAZEBO_libraries} ${rclcpp_LIBRARIES})
+list(APPEND plugins gazebo_drop_plugin_ros)
+message(STATUS "Adding ROS2 gazebo drop plugin")
+
+include_directories(
+  include
+  ${sensor_msgs_INCLUDE_DIRS}
+)
+ament_target_dependencies(gazebo_drop_plugin_ros
+  "gazebo_dev"
+  "gazebo_ros"
+  "sensor_msgs"
+  "std_srvs"
+  "rclcpp"
+)
+ament_export_libraries(gazebo_drop_plugin_ros)
+
 
 if (GSTREAMER_FOUND)
   add_library(gazebo_gst_camera_plugin SHARED src/gazebo_gst_camera_plugin.cpp)
