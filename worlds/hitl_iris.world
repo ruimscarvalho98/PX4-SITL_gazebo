@@ -50,5 +50,13 @@
       <uri>model://iris_hitl</uri>
       <pose>1.01 0.98 0.83 0 0 1.14</pose>
     </include>
+    <include>
+      <uri>model://cap_car</uri>
+      <pose> -1 0 0 0 0 0 </pose>
+    </include>
+    <include>
+      <uri>model://irlock_beacon</uri>
+      <pose> -1 0 1 0 0 0 </pose>
+    </include>
   </world>
 </sdf>
