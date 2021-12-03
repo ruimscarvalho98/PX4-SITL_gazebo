@@ -86,7 +86,6 @@ void DropPluginRos::Load(physics::ModelPtr model, sdf::ElementPtr sdf)
 }
 
 void DropPluginRos::OnUpdate(const common::UpdateInfo&){
-
   physics::ModelPtr package_model_ptr = GetModelPtr(model_name_);
   //Trigger parachute if flight termination
   if((ref_motor_rot_vel_ > release_rot_vel_) || manual_trigger) LoadPackage();
