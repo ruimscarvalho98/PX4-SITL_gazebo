@@ -44,7 +44,8 @@
       <uri>model://ground_plane</uri>
     </include>
     <include>
-      <uri>model://asphalt_plane</uri>
+      <uri>model://sonoma_raceway</uri>
+      <pose>-295 150 -7 0 0 0</pose>
     </include>
     <include>
       <uri>model://iris_hitl</uri>
